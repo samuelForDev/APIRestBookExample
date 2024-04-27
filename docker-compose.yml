@@ -1,0 +1,14 @@
+version: '4'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: api_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: books_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./data:/var/lib/postgres"
