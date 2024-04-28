@@ -1,6 +1,7 @@
 package com.example.apirestbooksexample.controller;
 
 import com.example.apirestbooksexample.entity.Book;
+import com.example.apirestbooksexample.entity.dto.BookCustomConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookCreateDto;
 import com.example.apirestbooksexample.exception.CreateBookException;
@@ -43,6 +44,20 @@ public class BookController {
     public Book saveBook(@RequestBody BookCreateDto book)
             throws CreateBookException {
         return bookService.saveBook(book);
+    }
+
+    @PostMapping("/getByAuthor")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookConsultDto> findBooksByAuthor(
+            @RequestBody BookCustomConsultDto idAuthor) {
+        return bookService.findBooksByAuthor(idAuthor);
+    }
+
+    @PostMapping("/getByGenre")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookConsultDto> findBooksByGenre(
+            @RequestBody BookCustomConsultDto idGenre) {
+        return bookService.findBooksByGenre(idGenre);
     }
 
 

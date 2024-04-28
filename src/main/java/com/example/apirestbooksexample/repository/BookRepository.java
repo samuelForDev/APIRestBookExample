@@ -12,11 +12,11 @@ import java.util.UUID;
 @Repository
 public interface BookRepository extends JpaRepository<Book, UUID> {
 
-    @Query("SELECT b FROM Book b WHERE b.author = :idAuthor")
+    @Query("SELECT b FROM Book b WHERE b.author.idAuthor = :idAuthor")
     List<Book> findBooksByAuthor(
             @Param("idAuthor") UUID idAuthor);
 
-    @Query("select b from Book b where b.genre = :idGenre")
+    @Query("select b from Book b where b.genre.idGenre = :idGenre")
     List<Book> findBooksByGenre(
             @Param("idGenre") UUID idGenre);
 

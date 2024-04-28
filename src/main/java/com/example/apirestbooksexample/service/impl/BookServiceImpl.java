@@ -1,6 +1,7 @@
 package com.example.apirestbooksexample.service.impl;
 
 import com.example.apirestbooksexample.entity.Book;
+import com.example.apirestbooksexample.entity.dto.BookCustomConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookCreateDto;
 import com.example.apirestbooksexample.exception.CreateBookException;
@@ -53,6 +54,24 @@ public class BookServiceImpl implements BookService {
         } catch (Exception e) {
             throw new CreateBookException("Failed to create book: " + e.getMessage());
         }
+    }
+
+    @Override
+    public List<BookConsultDto> findBooksByAuthor(BookCustomConsultDto idAuthor) {
+        List<Book> books = bookRepository.findBooksByAuthor(idAuthor.getIdAuthor());
+        List<BookConsultDto> booksDtos = books.stream()
+                .map(this::mapToBookConsultDto)
+                .collect(Collectors.toList());
+        return booksDtos;
+    }
+
+    @Override
+    public List<BookConsultDto> findBooksByGenre(BookCustomConsultDto idGenre) {
+        List<Book> books = bookRepository.findBooksByGenre(idGenre.getIdGenre());
+        List<BookConsultDto> booksDtos = books.stream()
+                .map(this::mapToBookConsultDto)
+                .collect(Collectors.toList());
+        return booksDtos;
     }
 
     private boolean validateDataToCreate(BookCreateDto bookData) {
