@@ -20,5 +20,12 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     List<Book> findBooksByGenre(
             @Param("idGenre") UUID idGenre);
 
+    @Query(
+            "select b from Book b " +
+            "where b.author.idAuthor = :idAuthor " +
+            "and b.genre.idGenre = :idGenre")
+    List<Book> findBooksByAuthorAndGenre(
+            @Param("idAuthor") UUID idAuthor,
+            @Param("idGenre") UUID idGenre);
 
 }

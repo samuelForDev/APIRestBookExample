@@ -15,6 +15,6 @@ public interface BookService {
     Book saveBook (BookCreateDto book) throws CreateBookException;
     List<BookConsultDto> findBooksByAuthor(BookCustomConsultDto idAuthor);
     List<BookConsultDto> findBooksByGenre(BookCustomConsultDto idGenre);
-
+    List<BookConsultDto> findBooksByAuthorAndGenre(BookCustomConsultDto book);
 
 }

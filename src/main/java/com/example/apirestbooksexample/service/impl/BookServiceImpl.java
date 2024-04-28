@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 @Service
 public class BookServiceImpl implements BookService {
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     private final BookRepository bookRepository;
     public BookServiceImpl(BookRepository bookRepository) {
@@ -68,6 +68,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookConsultDto> findBooksByGenre(BookCustomConsultDto idGenre) {
         List<Book> books = bookRepository.findBooksByGenre(idGenre.getIdGenre());
+        List<BookConsultDto> booksDtos = books.stream()
+                .map(this::mapToBookConsultDto)
+                .collect(Collectors.toList());
+        return booksDtos;
+    }
+
+    @Override
+    public List<BookConsultDto> findBooksByAuthorAndGenre(BookCustomConsultDto book) {
+        List<Book> books = bookRepository.findBooksByAuthorAndGenre(
+                book.getIdAuthor(),
+                book.getIdGenre());
         List<BookConsultDto> booksDtos = books.stream()
                 .map(this::mapToBookConsultDto)
                 .collect(Collectors.toList());

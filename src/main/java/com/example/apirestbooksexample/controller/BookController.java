@@ -60,5 +60,12 @@ public class BookController {
         return bookService.findBooksByGenre(idGenre);
     }
 
+    @PostMapping("/AuthorAndGenre")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookConsultDto> findBooksByAuthorAndGenre(
+            @RequestBody BookCustomConsultDto book) {
+        return bookService.findBooksByAuthorAndGenre(book);
+    }
+
 
 }
