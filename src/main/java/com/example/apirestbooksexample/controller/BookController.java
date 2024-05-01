@@ -4,8 +4,8 @@ import com.example.apirestbooksexample.entity.Book;
 import com.example.apirestbooksexample.entity.dto.BookCustomConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookCreateAndUpdateDto;
-import com.example.apirestbooksexample.exception.CreateBookException;
-import com.example.apirestbooksexample.exception.UpdateBookException;
+import com.example.apirestbooksexample.exception.CreateEntityException;
+import com.example.apirestbooksexample.exception.UpdateEntityException;
 import com.example.apirestbooksexample.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,7 +45,7 @@ public class BookController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Book saveBook(@RequestBody BookCreateAndUpdateDto book)
-            throws CreateBookException {
+            throws CreateEntityException {
         return bookService.saveBook(book);
     }
 
@@ -74,7 +74,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.OK)
     public Book updateBook(
             @PathVariable UUID id,
-            @RequestBody BookCreateAndUpdateDto book) throws UpdateBookException {
+            @RequestBody BookCreateAndUpdateDto book) throws UpdateEntityException {
 
         return bookService.updateBook(id, book);
     }

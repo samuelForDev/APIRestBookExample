@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorMessageDTO> createBookNotFoundException(CreateBookException exception) {
+    public ResponseEntity<ErrorMessageDTO> createBookNotFoundException(CreateEntityException exception) {
         ErrorMessageDTO messageDTO = new ErrorMessageDTO(
                 HttpStatus.NOT_FOUND,
                 exception.getMessage());
@@ -23,7 +23,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorMessageDTO> updateBookException(UpdateBookException exception) {
+    public ResponseEntity<ErrorMessageDTO> updateBookException(UpdateEntityException exception) {
         ErrorMessageDTO messageDTO = new ErrorMessageDTO(
                 HttpStatus.BAD_REQUEST,
                 exception.getMessage());

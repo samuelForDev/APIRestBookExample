@@ -4,8 +4,8 @@ import com.example.apirestbooksexample.entity.Book;
 import com.example.apirestbooksexample.entity.dto.BookCustomConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookCreateAndUpdateDto;
-import com.example.apirestbooksexample.exception.CreateBookException;
-import com.example.apirestbooksexample.exception.UpdateBookException;
+import com.example.apirestbooksexample.exception.CreateEntityException;
+import com.example.apirestbooksexample.exception.UpdateEntityException;
 import com.example.apirestbooksexample.repository.BookRepository;
 import com.example.apirestbooksexample.service.BookService;
 import org.springframework.stereotype.Service;
@@ -43,17 +43,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book saveBook(BookCreateAndUpdateDto bookData) throws CreateBookException {
+    public Book saveBook(BookCreateAndUpdateDto bookData) throws CreateEntityException {
         try {
             if (validateDataToCreateOrUpdate(bookData)) {
                 Book newBook = mapToBookEntity(bookData);
                 return bookRepository.save(newBook);
             } else {
-                throw new CreateBookException("Invalid data provided for creating the book");
+                throw new CreateEntityException("Invalid data provided for creating the book");
             }
 
         } catch (Exception e) {
-            throw new CreateBookException("Failed to create book: " + e.getMessage());
+            throw new CreateEntityException("Failed to create book: " + e.getMessage());
         }
     }
 
@@ -88,7 +88,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book updateBook(UUID idBook, BookCreateAndUpdateDto book)
-            throws UpdateBookException {
+            throws UpdateEntityException {
 
         Optional<Book> oldBookOptional = bookRepository.findById(idBook);
         if (oldBookOptional.isPresent()) {
@@ -101,10 +101,10 @@ public class BookServiceImpl implements BookService {
                 oldBook.setGenre(book.getGenre());
                 return bookRepository.save(oldBook);
             } else {
-                throw new UpdateBookException("Invalid data provided for updating the book");
+                throw new UpdateEntityException("Invalid data provided for updating the book");
             }
         } else {
-            throw new UpdateBookException("Book not found with ID: " + idBook);
+            throw new UpdateEntityException("Book not found with ID: " + idBook);
         }
 
     }
