@@ -8,6 +8,7 @@ import com.example.apirestbooksexample.exception.CreateBookException;
 import com.example.apirestbooksexample.exception.UpdateBookException;
 import com.example.apirestbooksexample.service.BookService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,5 +79,10 @@ public class BookController {
         return bookService.updateBook(id, book);
     }
 
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteBook(@PathVariable UUID id) {
+        return bookService.deleteBook(id);
+    }
 
 }

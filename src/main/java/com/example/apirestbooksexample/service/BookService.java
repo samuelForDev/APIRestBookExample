@@ -18,5 +18,6 @@ public interface BookService {
     List<BookConsultDto> findBooksByGenre(BookCustomConsultDto idGenre);
     List<BookConsultDto> findBooksByAuthorAndGenre(BookCustomConsultDto book);
     Book updateBook(UUID idBook, BookCreateAndUpdateDto book) throws UpdateBookException;
+    String deleteBook(UUID idBook);
 
 }

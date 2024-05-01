@@ -109,6 +109,16 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    @Override
+    public String deleteBook(UUID idBook) {
+        Optional<Book> bookOptional = bookRepository.findById(idBook);
+        if (bookOptional.isPresent()) {
+            bookRepository.deleteById(idBook);
+            return "Delete book: " + idBook;
+        }
+        return "Book Not found";
+    }
+
     private boolean validateDataToCreateOrUpdate(BookCreateAndUpdateDto bookData) {
         return Stream.of(
                 bookData.getBookName() != null && !bookData.getBookName().isEmpty(),
