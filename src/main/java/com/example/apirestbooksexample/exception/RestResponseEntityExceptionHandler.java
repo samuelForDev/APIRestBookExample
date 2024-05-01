@@ -21,4 +21,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorMessageDTO> updateBookException(UpdateBookException exception) {
+        ErrorMessageDTO messageDTO = new ErrorMessageDTO(
+                HttpStatus.BAD_REQUEST,
+                exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageDTO);
+    }
+
 }
