@@ -3,13 +3,15 @@ package com.example.apirestbooksexample.controller;
 import com.example.apirestbooksexample.entity.Book;
 import com.example.apirestbooksexample.entity.dto.BookCustomConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookConsultDto;
-import com.example.apirestbooksexample.entity.dto.BookCreateDto;
+import com.example.apirestbooksexample.entity.dto.BookCreateAndUpdateDto;
 import com.example.apirestbooksexample.exception.CreateBookException;
+import com.example.apirestbooksexample.exception.UpdateBookException;
 import com.example.apirestbooksexample.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,7 +43,7 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Book saveBook(@RequestBody BookCreateDto book)
+    public Book saveBook(@RequestBody BookCreateAndUpdateDto book)
             throws CreateBookException {
         return bookService.saveBook(book);
     }
@@ -65,6 +67,15 @@ public class BookController {
     public List<BookConsultDto> findBooksByAuthorAndGenre(
             @RequestBody BookCustomConsultDto book) {
         return bookService.findBooksByAuthorAndGenre(book);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Book updateBook(
+            @PathVariable UUID id,
+            @RequestBody BookCreateAndUpdateDto book) throws UpdateBookException {
+
+        return bookService.updateBook(id, book);
     }
 
 

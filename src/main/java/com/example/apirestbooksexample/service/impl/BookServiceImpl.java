@@ -3,8 +3,9 @@ package com.example.apirestbooksexample.service.impl;
 import com.example.apirestbooksexample.entity.Book;
 import com.example.apirestbooksexample.entity.dto.BookCustomConsultDto;
 import com.example.apirestbooksexample.entity.dto.BookConsultDto;
-import com.example.apirestbooksexample.entity.dto.BookCreateDto;
+import com.example.apirestbooksexample.entity.dto.BookCreateAndUpdateDto;
 import com.example.apirestbooksexample.exception.CreateBookException;
+import com.example.apirestbooksexample.exception.UpdateBookException;
 import com.example.apirestbooksexample.repository.BookRepository;
 import com.example.apirestbooksexample.service.BookService;
 import org.springframework.stereotype.Service;
@@ -42,9 +43,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book saveBook(BookCreateDto bookData) throws CreateBookException {
+    public Book saveBook(BookCreateAndUpdateDto bookData) throws CreateBookException {
         try {
-            if (validateDataToCreate(bookData)) {
+            if (validateDataToCreateOrUpdate(bookData)) {
                 Book newBook = mapToBookEntity(bookData);
                 return bookRepository.save(newBook);
             } else {
@@ -85,7 +86,30 @@ public class BookServiceImpl implements BookService {
         return booksDtos;
     }
 
-    private boolean validateDataToCreate(BookCreateDto bookData) {
+    @Override
+    public Book updateBook(UUID idBook, BookCreateAndUpdateDto book)
+            throws UpdateBookException {
+
+        Optional<Book> oldBookOptional = bookRepository.findById(idBook);
+        if (oldBookOptional.isPresent()) {
+            Book oldBook = oldBookOptional.get();
+
+            if(validateDataToCreateOrUpdate(book)) {
+                oldBook.setBookName(book.getBookName());
+                oldBook.setPages(book.getPages());
+                oldBook.setAuthor(book.getAuthor());
+                oldBook.setGenre(book.getGenre());
+                return bookRepository.save(oldBook);
+            } else {
+                throw new UpdateBookException("Invalid data provided for updating the book");
+            }
+        } else {
+            throw new UpdateBookException("Book not found with ID: " + idBook);
+        }
+
+    }
+
+    private boolean validateDataToCreateOrUpdate(BookCreateAndUpdateDto bookData) {
         return Stream.of(
                 bookData.getBookName() != null && !bookData.getBookName().isEmpty(),
                 bookData.getPages() != null && !bookData.getPages().isEmpty(),
@@ -94,7 +118,7 @@ public class BookServiceImpl implements BookService {
         ).allMatch(Boolean::booleanValue);
     }
 
-    private Book mapToBookEntity(BookCreateDto bookData) {
+    private Book mapToBookEntity(BookCreateAndUpdateDto bookData) {
         return Book.builder()
                 .idBook(UUID.randomUUID())
                 .bookName(bookData.getBookName())

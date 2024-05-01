@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookCreateDto {
+public class BookCreateAndUpdateDto {
 
     private String bookName;
     private String pages;
