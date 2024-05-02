@@ -148,6 +148,7 @@ public class BookServiceImpl implements BookService {
         return BookConsultDto.builder()
                 .idBook(book.getIdBook())
                 .bookName(book.getBookName())
+                .isnb(book.getIsbn())
                 .pages(book.getPages())
                 .author(book.getAuthor().getAuthorName())
                 .genre(book.getGenre().getGenreName())

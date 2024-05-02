@@ -15,6 +15,7 @@ public class BookConsultDto {
 
     private UUID idBook;
     private String bookName;
+    private Long isnb;
     private String pages;
     private String author;
     private String genre;
